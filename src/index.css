@@ -75,6 +75,20 @@ a {
 .gray_btn span {
   transform: translateY(-1px);
 }
+.input_wrap {
+  position: relative;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input_wrap2{
+  position: relative;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .blurt {
   position: fixed;
   top: 0;

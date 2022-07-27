@@ -22,6 +22,7 @@ export default function UserList({ users }) {
     setUserId(id)
     setVisible(true)
   }
+  console.log(users.number,"selam");
   return (
     <>
       <tbody>
@@ -30,7 +31,15 @@ export default function UserList({ users }) {
             <span className="bg-transparent">{users.name}</span>
           </td>
           <td className="p-3 px-5">
-            <span className="bg-transparent">{users.number}</span>
+            <span className="bg-transparent">{users.number.map((k,i)=>(
+              <ul>
+              <li key={i}>
+                <span className="text-sm text-blue-600 font-medium leading-tight">
+                 Phone Number: {k}
+                </span>
+              </li>
+            </ul>
+            ))}</span>
           </td>
 
           <td className="p-3 px-5 flex justify-end">

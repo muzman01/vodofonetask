@@ -1,4 +1,5 @@
 import { Formik, Form } from "formik";
+import "./style.css";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import LoginInput from "../../components/inputs/logininput/index";
@@ -16,11 +17,18 @@ export default function AddUser({ setVisible }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
+  const [userNumbers, setUserNumbers] = useState([]);
   const { name, number } = login;
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
   };
+  const handleNumberChange = (e) => {
+    const a = e.target.value;
+    let newa = a.split(",");
+    setUserNumbers(newa);
+  };
+  console.log(userNumbers, "yenşşş");
   const loginValidation = Yup.object({
     name: Yup.string().required("name address is required.").max(100),
     number: Yup.string().required("number is required"),
@@ -38,7 +46,7 @@ export default function AddUser({ setVisible }) {
         headers: {},
         data: {
           name,
-          number,
+          number:userNumbers,
         },
       });
       console.log(data);
@@ -46,7 +54,6 @@ export default function AddUser({ setVisible }) {
       setTimeout(() => {
         window.location.reload();
       }, 2000);
-      
     } catch (error) {
       setLoading(false);
       setError(error.response.data.message);
@@ -82,14 +89,19 @@ export default function AddUser({ setVisible }) {
                   placeholder="user name"
                   onChange={handleLoginChange}
                 />
-                <LoginInput
-                  type="text"
-                  name="number"
-                  placeholder="user phone number"
-                  onChange={handleLoginChange}
-                  bottom
-                />
-                <button type="submit" className="blue_btn">
+                <div className="input_wrap">
+                  <div className="w-full">
+
+                    <input
+                      type="text"
+                      placeholder="links"
+                      className="input_wrap"
+                      onChange={handleNumberChange}
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="blue_btn" onClick={loginSubmit}>
                   add new user
                 </button>
               </Form>

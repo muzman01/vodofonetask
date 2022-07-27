@@ -1,7 +1,8 @@
 import { Formik, Form } from "formik";
+import "./style.css";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import LoginInput from "../../components/inputs/logininput/index";
+import UpdateUserInput from "../../components/inputs/updateUser/index";
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
@@ -14,14 +15,20 @@ export default function EditUser({ setVisible, userId, users }) {
     name: users.name,
     number: users.number,
   };
-  console.log(userId, "bu idd");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
+  const [userNumbers, setUserNumbers] = useState([]);
   const { name, number } = login;
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
+  };
+  const handleNumberChange = (e) => {
+    const a = e.target.value;
+    let newa = a.split(",");
+    setUserNumbers(newa);
   };
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -36,7 +43,7 @@ export default function EditUser({ setVisible, userId, users }) {
         headers: {},
         data: {
           name,
-          number,
+          number: userNumbers,
         },
       });
       console.log(data);
@@ -68,20 +75,23 @@ export default function EditUser({ setVisible, userId, users }) {
           >
             {(formik) => (
               <Form>
-                <LoginInput
+                <UpdateUserInput
                   type="text"
                   name="name"
                   placeholder="user name"
                   onChange={handleLoginChange}
                 />
-                <LoginInput
-                  type="text"
-                  name="number"
-                  placeholder="user phone number"
-                  onChange={handleLoginChange}
-                  bottom
-                />
-                <button type="submit" className="blue_btn">
+                <div className="input_wrap">
+                  <div className="w-full">
+                    <input
+                      type="text"
+                      placeholder="links"
+                      className="input_wrap"
+                      onChange={handleNumberChange}
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="blue_btn" onClick={loginSubmit}>
                   update user
                 </button>
               </Form>
