@@ -19,7 +19,7 @@ export default function EditUser({ setVisible, userId, users }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
-  const [userNumbers, setUserNumbers] = useState([]);
+  const [userNumbers, setUserNumbers] = useState([users.number]);
   const { name, number } = login;
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -48,9 +48,9 @@ export default function EditUser({ setVisible, userId, users }) {
       });
       console.log(data);
       setSuccess("user add succes");
-      setTimeout(() => {
+   
         window.location.reload();
-      }, 2000);
+
     } catch (error) {
       setLoading(false);
       setError(error.response.data.message);

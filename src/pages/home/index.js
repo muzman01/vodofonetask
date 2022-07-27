@@ -1,10 +1,14 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserList from "../../components/users/UserList";
 import AddUser from "../../components/users/AddUser";
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 export default function Home() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => ({ ...state }));
   const [visible, setVisible] = useState(false);
   const [searcVisible, setSearcVisible] = useState(false);
@@ -74,6 +78,13 @@ export default function Home() {
     setUserId(id);
     setVisible(true);
   };
+  const logOutBtn = () =>{
+    Cookies.set('user',"")
+    dispatch({
+      type: "LOGOUT",
+    });
+    window.location.reload();
+  }
   useEffect(() => {
     getAllUserInApi();
   }, []);
@@ -85,6 +96,9 @@ export default function Home() {
           <h1 className="text-3xl">
             Welcome <span className="text-blue-600">{user.email}</span>
           </h1>
+          <div className="absolute mt-20">
+            <button className="blue_btn" onClick={logOutBtn}>Log Out</button>
+          </div>
           <div className="ml-36 p-4 flex">
             <div className="input_wrap">
               <div className="w-full">
@@ -116,6 +130,7 @@ export default function Home() {
             <tr className="border-b">
               <th className="text-left p-3 px-5">Name</th>
               <th className="text-left p-3 px-5">Number or numbers</th>
+              <th className="text-left p-3 px-5">user Id</th>
 
               <th>
                 {" "}

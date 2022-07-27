@@ -41,7 +41,9 @@ export default function UserList({ users }) {
             </ul>
             ))}</span>
           </td>
-
+         < td className="p-3 px-5">
+            <span className="bg-transparent">{users.id}</span>
+          </td>
           <td className="p-3 px-5 flex justify-end">
             <button
               type="button"
