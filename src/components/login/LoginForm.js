@@ -12,13 +12,15 @@ const loginInfos = {
   email: "",
   password: "",
 };
+
+const ACCNAME = process.env.REACT_APP_ADMIN_ACC;
+const ACCKEY = process.env.REACT_APP_ADMIN_KEY;
 const data = {
-  email: "muzman@muzman.com",
-  password: "12345",
+  email: ACCNAME,
+  password: ACCKEY,
 };
-const ACCNAME = "muzman@muzman.com";
-const ACCKEY = "12345";
 export default function LoginForm() {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(loginInfos);

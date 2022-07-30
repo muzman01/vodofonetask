@@ -6,6 +6,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import {
+  getAllApiUser,
+  getApıUserName,
+  getApıById,
+  deleteByID,
+} from "../../functions/fetchData";
 export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,10 +28,10 @@ export default function Home() {
   const [seachUserId, setSearchUserId] = useState();
   const [error, setError] = useState("");
   const getAllUserInApi = async () => {
+    setLoading(true);
     try {
-      const { data } = await axios.get(
-        "https://62e12824fa99731d75cf9609.mockapi.io/api/users/userd"
-      );
+      const data = await getAllApiUser();
+      setLoading(false);
       setAllUsers(data);
     } catch (error) {}
   };
@@ -37,10 +43,7 @@ export default function Home() {
     setSearcVisibleName(true);
     setLoadingSerch(true);
     try {
-      const { data } = await axios.get(
-        `https://62e12824fa99731d75cf9609.mockapi.io/api/users/userd?name=${inputGetName}`
-      );
-      console.log(data);
+      const data = await getApıUserName(inputGetName);
       setSearchUserName(data);
     } catch (error) {
       setError(error);
@@ -52,11 +55,7 @@ export default function Home() {
     setSearcVisible(true);
     setLoadingSerch(true);
     try {
-      const { data } = await axios({
-        method: "get",
-        url: `https://62e12824fa99731d75cf9609.mockapi.io/api/users/userd/${id}`,
-      });
-
+      const data = await getApıById(id);
       setSearchUserId(data);
     } catch (error) {
       setError(error);
@@ -66,10 +65,7 @@ export default function Home() {
   const deleteUser = async (id) => {
     setLoading(true);
     try {
-      const { data } = await axios({
-        method: "DELETE",
-        url: `https://62e12824fa99731d75cf9609.mockapi.io/api/users/userd/${id}`,
-      });
+      const data = await deleteByID(id);
       setLoading(false);
       window.location.reload();
     } catch (error) {}
@@ -78,17 +74,17 @@ export default function Home() {
     setUserId(id);
     setVisible(true);
   };
-  const logOutBtn = () =>{
-    Cookies.set('user',"")
+  const logOutBtn = () => {
+    Cookies.set("user", "");
     dispatch({
       type: "LOGOUT",
     });
     window.location.reload();
-  }
+  };
   useEffect(() => {
     getAllUserInApi();
   }, []);
-  console.log(allUsers);
+
   return (
     <>
       <div className="text-gray-900 bg-gray-200">
@@ -97,7 +93,9 @@ export default function Home() {
             Welcome <span className="text-blue-600">{user.email}</span>
           </h1>
           <div className="absolute mt-20">
-            <button className="blue_btn" onClick={logOutBtn}>Log Out</button>
+            <button className="blue_btn" onClick={logOutBtn}>
+              Log Out
+            </button>
           </div>
           <div className="ml-36 p-4 flex">
             <div className="input_wrap">
@@ -143,7 +141,14 @@ export default function Home() {
                 </button>
               </th>
             </tr>
-
+            {loading ? (
+              <div style={{ marginLeft: "100%" }}>
+                {" "}
+                <ClipLoader color="#187f62" loading={loading} size={200} />
+              </div>
+            ) : (
+              <></>
+            )}
             {allUsers?.map((users) => (
               <UserList key={users.id} setVisible={setVisible} users={users} />
             ))}

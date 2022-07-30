@@ -9,24 +9,37 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-const userInfos = {
-  name: "",
-  number: [],
-};
+import GenderSelect from "../inputs/adduser/GenderSelect";
+import AperatorSelect from "../inputs/adduser/AperatorSelect";
+
 export default function AddUser({ setVisible }) {
+  const userInfos = {
+    name: "",
+    gender: "",
+    operator: "",
+  };
+  const numberInfos = {
+    number: [],
+  };
+  console.log(numberInfos);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
+  const [phoneNumbersArray, setPhoneNumbersArray] = useState([]);
   const [userNumbers, setUserNumbers] = useState([]);
-  const { name, number } = login;
+  const [phoneList, setPhoneList] = useState(1);
+  const [phoneArray, setPhoneArray] = useState([]);
+  const [genderError, setGenderError] = useState("");
+  const { name, gender, operator } = login;
+  const { number } = phoneNumbersArray;
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
   };
   const handleNumberChange = (e) => {
-    const a = e.target.value;
-    let newa = a.split(",");
-    setUserNumbers(newa);
+    const { name, value } = e.target;
+    console.log(name, value);
+    setPhoneNumbersArray({ ...phoneNumbersArray, [name]: value });
   };
   console.log(userNumbers, "yenşşş");
   const loginValidation = Yup.object({
@@ -46,7 +59,9 @@ export default function AddUser({ setVisible }) {
         headers: {},
         data: {
           name,
-          number:userNumbers,
+          number: phoneNumbersArray,
+          gender,
+          oparetor: login.operator,
         },
       });
       console.log(data);
@@ -59,6 +74,24 @@ export default function AddUser({ setVisible }) {
       setError(error.response.data.message);
     }
   };
+  var fieldsArray = [];
+  console.log(login);
+  console.log(phoneNumbersArray, "buuu");
+  for (var i = 0; i <= phoneList; i++) {
+    fieldsArray.push(
+      <div className="input_wrap mt-8">
+        <div className="w-full">
+          <input
+            type="text"
+            name={`${i + 1}`}
+            placeholder={`${i + 1}. numarayı ekle`}
+            className="input_wrap"
+            onChange={handleNumberChange}
+          />
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <div className="login_2 mt-52">
@@ -89,19 +122,48 @@ export default function AddUser({ setVisible }) {
                   placeholder="user name"
                   onChange={handleLoginChange}
                 />
-                <div className="input_wrap">
-                  <div className="w-full">
-
-                    <input
-                      type="text"
-                      placeholder="links"
-                      className="input_wrap"
-                      onChange={handleNumberChange}
-                    />
-                  </div>
+                <div className="border-t-2 border-indigo-500">
+                  <br></br>
+                  <span
+                    onClick={() => setPhoneList(phoneList - 1)}
+                    className="ml-48 mt-6 text-black font-bold p-2 px-4 rounded cursor-pointer "
+                  >
+                    {" "}
+                    -
+                  </span>
+                  <span
+                    onClick={() => setPhoneList(phoneList + 1)}
+                    className="   mt-6 w-11   font-bold p-2 text-black rounded cursor-pointer "
+                  >
+                    {" "}
+                    +
+                  </span>
+                  {fieldsArray}
                 </div>
-
-                <button type="submit" className="blue_btn" onClick={loginSubmit}>
+                <div className="reg_col">
+                  <div className="reg_line_header">
+                    Gender <i className="info_icon"></i>
+                  </div>
+                  <GenderSelect
+                    handleLoginChange={handleLoginChange}
+                    genderError={genderError}
+                  />
+                </div>
+                <div className="reg_col">
+                  <div className="reg_line_header">
+                    Operatör <i className="info_icon"></i>
+                  </div>
+                  <AperatorSelect
+                    handleLoginChange={handleLoginChange}
+                    genderError={genderError}
+                  />
+                </div>
+                <br></br>
+                <button
+                  type="submit"
+                  className="blue_btn"
+                  onClick={loginSubmit}
+                >
                   add new user
                 </button>
               </Form>

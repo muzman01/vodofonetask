@@ -5,7 +5,7 @@ import LoggedInRouters from "./routers/LoggedInRouters";
 import NotLoggedRouters from "./routers/NotLoggedRouters";
 
 function App() {
-  console.log(process.env.ADMİN_NAME);
+ 
   return (
     <>
       <Routes>
