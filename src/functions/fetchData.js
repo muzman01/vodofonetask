@@ -50,3 +50,8 @@ export async function editUserById(id, name, number) {
   });
   return res.data;
 }
+export async function listOfDate(){
+    const url = `${API_RUL}/?sortBy=createdAt&order=desc`;
+    const res = await axios.get(url);
+    return res.data;
+}

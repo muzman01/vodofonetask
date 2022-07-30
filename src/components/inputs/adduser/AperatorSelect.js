@@ -19,7 +19,7 @@ export default function AperatorSelect({ handleLoginChange, genderError }) {
       Vodafone
         <input
           type="radio"
-          name="operator"
+          name="oparetor"
           id="vodafone"
           value="Vodafone"
           onChange={handleLoginChange}
@@ -29,7 +29,7 @@ export default function AperatorSelect({ handleLoginChange, genderError }) {
         Turkcell
         <input
           type="radio"
-          name="operator"
+          name="oparetor"
           id="turkcell"
           value="Turkcell"
           onChange={handleLoginChange}
@@ -39,9 +39,9 @@ export default function AperatorSelect({ handleLoginChange, genderError }) {
         Turk Telekom
         <input
           type="radio"
-          name="operator"
+          name="oparetor"
           id="telekom"
-          value="Turk Telekom"
+          value="TurkTelekom"
           onChange={handleLoginChange}
         />
       </label>

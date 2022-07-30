@@ -11,7 +11,9 @@ import {
   getApıUserName,
   getApıById,
   deleteByID,
+  listOfDate,
 } from "../../functions/fetchData";
+import { filterAllData } from "../../functions/filterUsers";
 export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,11 +25,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [loadingSerch, setLoadingSerch] = useState(false);
   const [userId, setUserId] = useState();
+  const [filterStata, setFilterState] = useState(false);
+  const [filterData, setFilterData] = useState([]);
   const [searchUserName, setSearchUserName] = useState([]);
   const [inputGetName, setInputGetName] = useState();
   const [seachUserId, setSearchUserId] = useState();
   const [error, setError] = useState("");
   const getAllUserInApi = async () => {
+    const a = await listOfDate();
+
     setLoading(true);
     try {
       const data = await getAllApiUser();
@@ -40,10 +46,12 @@ export default function Home() {
     setInputGetName(name);
   };
   const searchBtn = async () => {
+    setLoading(true)
     setSearcVisibleName(true);
     setLoadingSerch(true);
     try {
       const data = await getApıUserName(inputGetName);
+      setLoading(false)
       setSearchUserName(data);
     } catch (error) {
       setError(error);
@@ -52,10 +60,12 @@ export default function Home() {
   };
   const handleChangeUserId = async (e) => {
     const id = e.target.value;
+    setLoading(true)
     setSearcVisible(true);
     setLoadingSerch(true);
     try {
       const data = await getApıById(id);
+      setLoading(false)
       setSearchUserId(data);
     } catch (error) {
       setError(error);
@@ -81,10 +91,23 @@ export default function Home() {
     });
     window.location.reload();
   };
+  const onSelect = async (e) => {
+    if (e.target.value === "default") {
+      setFilterState(false);
+      return;
+    }
+    setLoading(true);
+    setFilterState(true);
+    try {
+      const result = await filterAllData(e.target.value);
+      setLoading(false);
+      setFilterData(result);
+    } catch (error) {}
+  };
   useEffect(() => {
     getAllUserInApi();
   }, []);
-
+console.log(filterData);
   return (
     <>
       <div className="text-gray-900 bg-gray-200">
@@ -109,6 +132,23 @@ export default function Home() {
                 <button className="blue_btn" onClick={searchBtn}>
                   search
                 </button>
+                <th>
+                  <select
+                    id="countries"
+                    className="bg-gray-200 border border-gray-300 text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-400 dark:border-gray-400 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={onSelect}
+                  >
+                    <option selected value="default">
+                      Filter Users
+                    </option>
+                    <option value="gendermale">by gender Male</option>
+                    <option value="genderfemale">by gender Female</option>
+                    <option value="optturkcell">by operator Turkcell</option>
+                    <option value="optvodafone">by operator Vodafone</option>
+                    <option value="opttelekom">by operator Telekom</option>
+                    <option value="date">creation time</option>
+                  </select>
+                </th>
               </div>
             </div>
             <div className="input_wrap ml-4">
@@ -128,7 +168,8 @@ export default function Home() {
             <tr className="border-b">
               <th className="text-left p-3 px-5">Name</th>
               <th className="text-left p-3 px-5">Number or numbers</th>
-              <th className="text-left p-3 px-5">user Id</th>
+              <th className="text-left p-3 px-5">Gender</th>
+              <th className="text-left p-3 px-5">Operatör</th>
 
               <th>
                 {" "}
@@ -149,9 +190,28 @@ export default function Home() {
             ) : (
               <></>
             )}
-            {allUsers?.map((users) => (
-              <UserList key={users.id} setVisible={setVisible} users={users} />
-            ))}
+            {filterStata ? (
+              <>
+                {filterData?.map((users) => (
+                  <UserList
+                    key={users.id}
+                    setVisible={setVisible}
+                    users={users}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {" "}
+                {allUsers?.map((users) => (
+                  <UserList
+                    key={users.id}
+                    setVisible={setVisible}
+                    users={users}
+                  />
+                ))}
+              </>
+            )}
           </table>
         </div>
         {visible ? (

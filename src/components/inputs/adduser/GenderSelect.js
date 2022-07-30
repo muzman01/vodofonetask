@@ -21,7 +21,7 @@ export default function GenderSelect({ handleLoginChange, genderError }) {
           type="radio"
           name="gender"
           id="male"
-          value="male"
+          value="1"
           onChange={handleLoginChange}
         />
       </label>
@@ -31,7 +31,7 @@ export default function GenderSelect({ handleLoginChange, genderError }) {
           type="radio"
           name="gender"
           id="female"
-          value="female"
+          value="2"
           onChange={handleLoginChange}
         />
       </label>
@@ -41,7 +41,7 @@ export default function GenderSelect({ handleLoginChange, genderError }) {
           type="radio"
           name="gender"
           id="custom"
-          value="custom"
+          value="3"
           onChange={handleLoginChange}
         />
       </label>

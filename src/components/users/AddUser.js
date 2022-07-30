@@ -16,12 +16,12 @@ export default function AddUser({ setVisible }) {
   const userInfos = {
     name: "",
     gender: "",
-    operator: "",
+    oparetor: "",
   };
   const numberInfos = {
     number: [],
   };
-  console.log(numberInfos);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
@@ -30,18 +30,19 @@ export default function AddUser({ setVisible }) {
   const [phoneList, setPhoneList] = useState(1);
   const [phoneArray, setPhoneArray] = useState([]);
   const [genderError, setGenderError] = useState("");
-  const { name, gender, operator } = login;
+  const { name, gender, oparetor } = login;
   const { number } = phoneNumbersArray;
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
   };
+  console.log(login);
   const handleNumberChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+
     setPhoneNumbersArray({ ...phoneNumbersArray, [name]: value });
   };
-  console.log(userNumbers, "yenşşş");
+
   const loginValidation = Yup.object({
     name: Yup.string().required("name address is required.").max(100),
     number: Yup.string().required("number is required"),
@@ -61,10 +62,10 @@ export default function AddUser({ setVisible }) {
           name,
           number: phoneNumbersArray,
           gender,
-          oparetor: login.operator,
+          oparetor:login.oparetor,
         },
       });
-      console.log(data);
+
       setSuccess("user add succes");
       setTimeout(() => {
         window.location.reload();
@@ -75,16 +76,15 @@ export default function AddUser({ setVisible }) {
     }
   };
   var fieldsArray = [];
-  console.log(login);
-  console.log(phoneNumbersArray, "buuu");
-  for (var i = 0; i <= phoneList; i++) {
+
+  for (var i = 1; i <= phoneList; i++) {
     fieldsArray.push(
       <div className="input_wrap mt-8">
         <div className="w-full">
           <input
             type="text"
-            name={`${i + 1}`}
-            placeholder={`${i + 1}. numarayı ekle`}
+            name={`${i -1}`}
+            placeholder={`${i}. numarayı ekle`}
             className="input_wrap"
             onChange={handleNumberChange}
           />

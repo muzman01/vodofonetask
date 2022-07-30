@@ -22,7 +22,7 @@ export default function UserList({ users }) {
     setUserId(id)
     setVisible(true)
   }
-  console.log(users.number,"selam");
+console.log(users);
   return (
     <>
       <tbody>
@@ -42,7 +42,10 @@ export default function UserList({ users }) {
             ))}</span>
           </td>
          < td className="p-3 px-5">
-            <span className="bg-transparent">{users.id}</span>
+            <span className="bg-transparent">{users.gender === "1" ? <span>Male</span> : users.gender === "2" ? <span>Female</span> :  <span>Belirtmek istemiyor</span> }</span>
+          </td>
+          <td className="p-3 px-5">
+            <span className="bg-transparent">{users.oparetor}</span>
           </td>
           <td className="p-3 px-5 flex justify-end">
             <button
