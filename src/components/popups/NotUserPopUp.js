@@ -1,6 +1,9 @@
 import React from "react";
 
 export default function NotUserPopUp({ setSearcVisible }) {
+  setTimeout(() => {
+    window.location.reload();
+  }, 500);
   return (
     <div className="blurt">
       <tbody className="absolute mt-56 ml-56">
