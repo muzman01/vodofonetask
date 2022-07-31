@@ -32,7 +32,7 @@ export default function Home() {
   const [filterData, setFilterData] = useState([]);
   const [searchUserName, setSearchUserName] = useState([]);
   const [inputGetName, setInputGetName] = useState();
-  const [searchUserId, setSearchUserId] = useState();
+  const [searchUserId, setSearchUserId] = useState([]);
   const [error, setError] = useState("");
 
   const getAllUserInApi = async () => {
@@ -69,9 +69,8 @@ export default function Home() {
     setLoadingSerch(true);
     try {
       const data = await getApıById(id);
-  
-      setLoading(false);
       setSearchUserId(data);
+      setLoading(false);
     } catch (error) {
       setError(error);
       console.log(error);
@@ -112,7 +111,7 @@ export default function Home() {
   useEffect(() => {
     getAllUserInApi();
   }, []);
-  console.log(filterData);
+  console.log(searchUserId, "bu");
   return (
     <>
       <div className="text-gray-900 bg-gray-200">
@@ -229,16 +228,16 @@ export default function Home() {
         {searcVisible ? (
           <>
             {error !== "" ? (
-              <>
+              <div className="blurt">
                 <NotUserPopUp setSearcVisible={setSearcVisible} />
-              </>
+              </div>
             ) : (
               <div className="blurt">
                 <UserDetailPopUp
-                  setSearcVisible={setSearcVisible}
-                  updateUser={updateUser}
-                  seachUserId={searchUserId}
                   loading={loading}
+                  searchUserId={searchUserId}
+                  setVisible={searcVisible}
+                  setSearcVisible={setSearcVisible}
                   deleteUser={deleteUser}
                 />
               </div>
@@ -254,9 +253,9 @@ export default function Home() {
                 {loadingSerch ? (
                   <ClipLoader color="#187f62" loading={loading} size={150} />
                 ) : (
-                  <>
+                  <div className="blurt">
                     <NotUserPopUp setSearcVisible={setSearcVisible} />
-                  </>
+                  </div>
                 )}
               </>
             ) : (

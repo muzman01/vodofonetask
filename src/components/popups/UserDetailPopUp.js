@@ -7,7 +7,7 @@ export default function UserDetailPopUp({
   loading,
   deleteUser,
 }) {
-
+  console.log(searchUserId);
   return (
     <tbody className="absolute mt-56 ml-56">
       <span
@@ -23,18 +23,18 @@ export default function UserDetailPopUp({
         </td>
         <td className="p-3 px-5">
           <span className="bg-transparent">
-            {Object.values(searchUserId?.number).map((k, i) => (
-              <ul>
-                <li key={i}>
-                  <span className="text-sm text-blue-600 font-medium leading-tight">
-                    Phone Number: {k}
-                  </span>
-                </li>
-              </ul>
-            ))}
+            {searchUserId.gender === "1" ? (
+              <span>Male</span>
+            ) : searchUserId.gender === "2" ? (
+              <span>Female</span>
+            ) : (
+              <span>Belirtmek istemiyor</span>
+            )}
           </span>
         </td>
-
+        <td className="p-3 px-5">
+          <span className="bg-transparent">{searchUserId.oparetor}</span>
+        </td>
         <td className="p-3 px-5 flex justify-end">
           <button
             type="button"
