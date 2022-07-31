@@ -40,7 +40,7 @@ export default function EditUser({ setVisible, userId, users }) {
   const handleNumberChange = (e) => {
     const { name, value } = e.target;
 
-    setPhoneNumbersArray([ {...phoneNumbersArray, [name] : value} ]);
+    setPhoneNumbersArray([{ ...phoneNumbersArray, [name]: value }]);
   };
 
   const loginValidation = Yup.object({
@@ -63,8 +63,7 @@ export default function EditUser({ setVisible, userId, users }) {
           name: login.name,
           number: phoneNumbersArray,
           gender: login.gender,
-          oparetor: login.oparetor
-      
+          oparetor: login.oparetor,
         },
       });
       console.log(data);

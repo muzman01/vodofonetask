@@ -82,7 +82,7 @@ a {
   flex-direction: column;
   align-items: center;
 }
-.input_wrap2{
+.input_wrap2 {
   position: relative;
   width: 100px;
   display: flex;
@@ -112,14 +112,13 @@ a {
 .scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-
 }
 
-.scrollbar::-webkit-scrollbar-thumb{
+.scrollbar::-webkit-scrollbar-thumb {
   background: #aeaeaf;
-  border-radius:5px;
+  border-radius: 5px;
 }
-.small_circle{
+.small_circle {
   position: relative;
   height: 36px;
   width: 36px;

@@ -62,7 +62,7 @@ export default function AddUser({ setVisible }) {
           name,
           number: phoneNumbersArray,
           gender,
-          oparetor:login.oparetor,
+          oparetor: login.oparetor,
         },
       });
 
@@ -83,7 +83,7 @@ export default function AddUser({ setVisible }) {
         <div className="w-full">
           <input
             type="text"
-            name={`${i -1}`}
+            name={`${i - 1}`}
             placeholder={`${i}. numarayı ekle`}
             className="input_wrap"
             onChange={handleNumberChange}

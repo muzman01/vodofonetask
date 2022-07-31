@@ -16,7 +16,7 @@ export default function AperatorSelect({ handleLoginChange, genderError }) {
       style={{ marginBottom: `${genderError && !view3 ? "70px" : "0"}` }}
     >
       <label htmlFor="male">
-      Vodafone
+        Vodafone
         <input
           type="radio"
           name="oparetor"

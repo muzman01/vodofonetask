@@ -2,7 +2,6 @@ import "./style.css";
 import { useField, ErrorMessage } from "formik";
 import { useMediaQuery } from "react-responsive";
 export default function UpdateUserInput({ placeholder, bottom, ...props }) {
-
   const [field, meta] = useField(props);
   const desktopView = useMediaQuery({
     query: "(min-width: 850px)",
