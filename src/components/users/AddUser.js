@@ -25,10 +25,10 @@ export default function AddUser({ setVisible }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
-  const [phoneNumbersArray, setPhoneNumbersArray] = useState([]);
+  const [phoneNumbersArray, setPhoneNumbersArray] = useState({});
   const [userNumbers, setUserNumbers] = useState([]);
   const [phoneList, setPhoneList] = useState(1);
-  const [phoneArray, setPhoneArray] = useState([]);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [genderError, setGenderError] = useState("");
   const { name, gender, oparetor } = login;
   const { number } = phoneNumbersArray;
@@ -36,7 +36,7 @@ export default function AddUser({ setVisible }) {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
   };
-  console.log(login);
+
   const handleNumberChange = (e) => {
     const { name, value } = e.target;
 
@@ -51,28 +51,32 @@ export default function AddUser({ setVisible }) {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const loginSubmit = async () => {
-    try {
-      setLoading(true);
-      setLoading(true);
-      const { data } = await axios({
-        method: "post",
-        url: "https://62e12824fa99731d75cf9609.mockapi.io/api/users/userd",
-        headers: {},
-        data: {
-          name,
-          number: phoneNumbersArray,
-          gender,
-          oparetor: login.oparetor,
-        },
-      });
+    if (!login.gender || !login.name || !login.oparetor || !phoneNumbersArray) {
+      console.log("buton kaplaı");
+    } else {
+      try {
+        setLoading(true);
+        setLoading(true);
+        const { data } = await axios({
+          method: "post",
+          url: "https://62e12824fa99731d75cf9609.mockapi.io/api/users/userd",
+          headers: {},
+          data: {
+            name,
+            number: phoneNumbersArray,
+            gender,
+            oparetor: login.oparetor,
+          },
+        });
 
-      setSuccess("user add succes");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
-    } catch (error) {
-      setLoading(false);
-      setError(error.response.data.message);
+        setSuccess("user add succes");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } catch (error) {
+        setLoading(false);
+        setError(error.response.data.message);
+      }
     }
   };
   var fieldsArray = [];
@@ -86,7 +90,10 @@ export default function AddUser({ setVisible }) {
             name={`${i - 1}`}
             placeholder={`${i}. numarayı ekle`}
             className="input_wrap"
+            maxLength="11"
+            minLength="10"
             onChange={handleNumberChange}
+            required
           />
         </div>
       </div>
@@ -163,6 +170,7 @@ export default function AddUser({ setVisible }) {
                   type="submit"
                   className="blue_btn"
                   onClick={loginSubmit}
+                  disabled={btnDisabled}
                 >
                   add new user
                 </button>

@@ -32,8 +32,9 @@ export default function Home() {
   const [filterData, setFilterData] = useState([]);
   const [searchUserName, setSearchUserName] = useState([]);
   const [inputGetName, setInputGetName] = useState();
-  const [seachUserId, setSearchUserId] = useState();
+  const [searchUserId, setSearchUserId] = useState();
   const [error, setError] = useState("");
+
   const getAllUserInApi = async () => {
     const a = await listOfDate();
 
@@ -68,6 +69,7 @@ export default function Home() {
     setLoadingSerch(true);
     try {
       const data = await getApıById(id);
+  
       setLoading(false);
       setSearchUserId(data);
     } catch (error) {
@@ -235,7 +237,7 @@ export default function Home() {
                 <UserDetailPopUp
                   setSearcVisible={setSearcVisible}
                   updateUser={updateUser}
-                  seachUserId={seachUserId}
+                  seachUserId={searchUserId}
                   loading={loading}
                   deleteUser={deleteUser}
                 />

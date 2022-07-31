@@ -24,23 +24,25 @@ export default function EditUser({ setVisible, userId, users }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInfos);
-  const [phoneNumbersArray, setPhoneNumbersArray] = useState(users.number);
+  const [phoneNumbersArray, setPhoneNumbersArray] = useState(users?.number);
   const [userNumbers, setUserNumbers] = useState([]);
-  const [phoneList, setPhoneList] = useState(users.number.length);
+  const [phoneList, setPhoneList] = useState(
+    Object.values(users.number).length
+  );
   const [phoneArray, setPhoneArray] = useState([]);
   const [genderError, setGenderError] = useState("");
   const { name, gender, oparetor } = login;
   const { number } = phoneNumbersArray;
-  console.log(phoneNumbersArray);
-  console.log(login);
+
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
   };
   const handleNumberChange = (e) => {
     const { name, value } = e.target;
+    console.log(name);
 
-    setPhoneNumbersArray([{ ...phoneNumbersArray, [name]: value }]);
+    setPhoneNumbersArray({ ...phoneNumbersArray, [name]: value });
   };
 
   const loginValidation = Yup.object({
@@ -161,7 +163,7 @@ export default function EditUser({ setVisible, userId, users }) {
                   className="blue_btn"
                   onClick={loginSubmit}
                 >
-                  add new user
+                  edit {users.name}
                 </button>
               </Form>
             )}
