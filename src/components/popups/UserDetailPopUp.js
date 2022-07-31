@@ -38,17 +38,6 @@ export default function UserDetailPopUp({
         <td className="p-3 px-5 flex justify-end">
           <button
             type="button"
-            className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => updateUser(searchUserId?.id)}
-          >
-            {loading ? (
-              <ClipLoader color="#187f62" loading={loading} size={50} />
-            ) : (
-              <>Update</>
-            )}
-          </button>
-          <button
-            type="button"
             className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
             onClick={() => deleteUser(searchUserId?.id)}
             disabled={loading}

@@ -104,6 +104,10 @@ export default function Home() {
     setFilterState(true);
     try {
       const result = await filterAllData(e.target.value);
+
+      if(result.length < 1){
+        alert("aradığınız kriterde veri bulunamadı !")
+      }
       setLoading(false);
       setFilterData(result);
     } catch (error) {}
@@ -111,7 +115,7 @@ export default function Home() {
   useEffect(() => {
     getAllUserInApi();
   }, []);
-  console.log(searchUserId, "bu");
+
   return (
     <>
       <div className="text-gray-900 bg-gray-200">
@@ -239,6 +243,7 @@ export default function Home() {
                   setVisible={searcVisible}
                   setSearcVisible={setSearcVisible}
                   deleteUser={deleteUser}
+                  updateUser={updateUser}
                 />
               </div>
             )}
